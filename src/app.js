@@ -14,13 +14,40 @@ class App extends Component {
 
   config = {
     pages: [
-      'pages/index/index'
+      'pages/class/index',
+      'pages/index/index',
     ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'WeChat',
+      navigationBarTitleText: '汇学',
       navigationBarTextStyle: 'black'
+    },
+    tabBar: {
+      list: [
+        {
+          pagePath: 'pages/class/index',
+          text: '班级',
+          iconPath: './assets/tabbar/class.png',
+          selectedIconPath: './assets/tabbar/class-active.png'
+        },
+        {
+          pagePath: 'pages/index/index',
+          text: '社区',
+          iconPath: './assets/tabbar/community.png',
+          selectedIconPath: './assets/tabbar/community-active.png'
+        },
+        {
+          pagePath: 'pages/index/index',
+          text: '我的',
+          iconPath: './assets/tabbar/mine.png',
+          selectedIconPath: './assets/tabbar/mine-active.png'
+        }
+      ],
+      color: '#8a8a8a',
+      selectedColor: '#6190e8',
+      backgroundColor: '#fff',
+      borderStyle: 'white'
     }
   }
 
