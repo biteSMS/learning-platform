@@ -103,6 +103,7 @@ const config = {
     '@/constants': path.resolve(__dirname, '..', 'src/constants'),
     '@/pages': path.resolve(__dirname, '..', 'src/pages'),
     '@/reducers': path.resolve(__dirname, '..', 'src/reducers'),
+    '@/utils': path.resolve(__dirname, '..', 'src/utils'),
   }
 }
 

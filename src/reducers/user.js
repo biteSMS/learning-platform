@@ -1,17 +1,20 @@
 import {
-  ADD_USER_INFO
+  MODIFY_USER_INFO
 } from '@/constants/user'
 
 const INITIAL_STATE = {
-  
+  userInfo: {}
 }
 
 export default function user (state = INITIAL_STATE, action) {
   switch (action.type) {
-    case ADD_USER_INFO:
+    case MODIFY_USER_INFO:
       return {
         ...state,
-        userInfo: action.data
+        userInfo: {
+          ...state.userInfo,
+          ...action.data
+        }
       }
     default:
       return state

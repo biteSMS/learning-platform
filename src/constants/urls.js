@@ -1,7 +1,8 @@
 const baseURL = 'https://min.our16.top/api'
 
 const api = {
-  LOGIN: '/user/login'
+  LOGIN: '/user/login',
+  POST_USER_INFO: '/user/update'
 }
 
 export const URLS =

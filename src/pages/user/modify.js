@@ -1,4 +1,6 @@
 import Taro, { useState, useEffect } from '@tarojs/taro'
+import { updateUserInfo } from '@/actions/user'
+import { connect } from "@tarojs/redux"
 import {
   AtInput,
   AtForm,
@@ -6,18 +8,26 @@ import {
 } from 'taro-ui'
 import './modify.less'
 
-export const Modify = () => {
+const Modify = ({ userInfo, updateUserInfo }) => {
   useEffect(() => {
     Taro.setNavigationBarTitle({title: '修改个人信息'})
   }, [])
+  const {
+    username,
+    workId,
+    school,
+    departmentName,
+    phone,
+    email
+  } = userInfo
 
   const initialState = {
-    username: '1',
-    workId: '',
-    school: '',
-    departmentName: '',
-    phone: '',
-    email: ''
+    username,
+    workId,
+    school,
+    departmentName,
+    phone,
+    email
   }
   const [info, setInfo] = useState(initialState)
 
@@ -27,6 +37,10 @@ export const Modify = () => {
       [key]: value
     }))
     return value
+  }
+
+  function handleSubmit() {
+    updateUserInfo(info)
   }
 
   return (
@@ -80,8 +94,20 @@ export const Modify = () => {
       <AtButton
         className="modify-button"
         type="primary"
-        onClick={() => console.log(info)}
+        onClick={handleSubmit}
       >修改</AtButton>
     </View>
   )
 }
+
+const mapStateToProps = ({ user }) => ({
+  userInfo: user.userInfo
+})
+
+const mapDispatchToProps = dispatch => ({
+  updateUserInfo(data) {
+    dispatch(updateUserInfo(data))
+  }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Modify)

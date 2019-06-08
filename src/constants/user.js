@@ -1,2 +1,1 @@
-export const ADD_USER_INFO = 'ADD_USER_INFO'
-export const ADD_USER_DETAIL = 'ADD_USER_DETAIL'
+export const MODIFY_USER_INFO = 'MODIFY_USER_INFO'

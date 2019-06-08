@@ -2,7 +2,7 @@ import { useState } from "@tarojs/taro"
 import { AtTabs, AtTabsPane, AtCard, AtFab } from "taro-ui"
 import "./index.less"
 
-const Class = () => {
+export const Class = () => {
   const [currentTab, setCurrentTab] = useState(0)
   const tabList = [{ title: "我听的课" }, { title: "我教的课" }]
 

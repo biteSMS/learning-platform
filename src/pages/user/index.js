@@ -1,4 +1,5 @@
 import Taro, { useEffect } from '@tarojs/taro'
+import { connect } from "@tarojs/redux"
 import {
   AtAvatar,
   AtList,
@@ -6,18 +7,30 @@ import {
 } from 'taro-ui'
 import './index.less'
 
-export const User = () => {
+const User = ({ userInfo }) => {
   useEffect(() => {
     Taro.setNavigationBarTitle({title: '我的'})
   }, [])
 
+  const {
+    username,
+    workId,
+    school,
+    departmentName,
+    phone,
+    email,
+    name,
+    sex,
+    headUrl
+  } = userInfo
+
   return (
     <View className="user">
       <View className="information flex-align">
-        <AtAvatar image='http://storage.360buyimg.com/mtd/home/32443566_635798770100444_2113947400891531264_n1533825816008.jpg'></AtAvatar>
+        <AtAvatar image={headUrl}></AtAvatar>
         <View className="person">
-          <View className="name">哈哈哈</View>
-          <View className="id">2017211657</View>
+          <View className="name">{username}</View>
+          <View className="id">{workId}</View>
         </View>
         <View className="modify flex-align">
           详细个人信息
@@ -25,16 +38,16 @@ export const User = () => {
       </View>
       <View className="detailed">
         <View className="at-row">
-          <View className='at-col'>昵称：bibi</View>
-          <View className='at-col'>专业：信息安全</View>
+          <View className='at-col'>昵称：{name}</View>
+          <View className='at-col'>专业：{departmentName}</View>
         </View>
         <View className="at-row">
-          <View className='at-col'>电话：1500000000</View>
-          <View className='at-col'>学校：重庆邮电大学</View>
+          <View className='at-col'>电话：{phone}</View>
+          <View className='at-col'>学校：{school}</View>
         </View>
         <View className="at-row">
-          <View className='at-col'>性别：男</View>
-          <View className='at-col'>邮箱：333333333@qq.com</View>
+          <View className='at-col'>性别：{sex === 1 ? '男' : '女'}</View>
+          <View className='at-col'>邮箱：{email}</View>
         </View>
       </View>
       <AtList>
@@ -61,3 +74,9 @@ export const User = () => {
     </View>
   )
 }
+
+const mapStateToProps = ({ user }) => ({
+  userInfo: user.userInfo
+})
+
+export default connect(mapStateToProps)(User)

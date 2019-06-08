@@ -1,14 +1,17 @@
-import Taro from '@tarojs/taro'
-import { addUserInfo } from '@/actions/user'
+import Taro, {useState} from '@tarojs/taro'
+import { fetchUserInfo } from '@/actions/user'
 import { connect } from "@tarojs/redux"
 import './index.less'
 
-const Auth = ({ addUserInfo }) => {
+const Auth = ({
+  fetchUserInfo
+}) => {
+  const [loading, setLoading] = useState(false)
 
-  function onGetUserInfo(e) {
+  async function onGetUserInfo(e) {
+    setLoading(true)
     const { detail } = e
     const { userInfo } = detail
-    
     if (!userInfo) {
       return Taro.showToast({
         title: '请同意授权进入汇学',
@@ -16,19 +19,13 @@ const Auth = ({ addUserInfo }) => {
         duration: 2000
       })
     }
-
-    const {
-      avatarUrl,
-      gender,
-      nickName
-    } = userInfo
-
-    addUserInfo({
+    const { avatarUrl, gender, nickName } = userInfo
+    const data = {
       headUrl: avatarUrl,
       sex: gender,
       nickName
-    })
-    Taro.redirectTo({url: '/pages/auth/login'})
+    }
+    fetchUserInfo(data)
   }
   
   return (
@@ -41,15 +38,16 @@ const Auth = ({ addUserInfo }) => {
         className="button"
         type="primary"
         openType='getUserInfo'
+        loading={loading}
         onGetUserInfo={onGetUserInfo}
-      >授 权</Button>
+      >进 入</Button>
     </View>
   )
 }
 
 const mapDispatchToProps = dispatch => ({
-  addUserInfo(data) {
-    dispatch(addUserInfo(data))
+  fetchUserInfo(data) {
+    dispatch(fetchUserInfo(data))
   }
 })
 

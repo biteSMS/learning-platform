@@ -1,4 +1,6 @@
 import Taro, { useState, useEffect } from '@tarojs/taro'
+import { postUserInfo } from '@/actions/user'
+import { connect } from "@tarojs/redux"
 import {
   AtInput,
   AtForm,
@@ -6,13 +8,13 @@ import {
 } from 'taro-ui'
 import './fillin.less'
 
-export const Fillin = () => {
+const Fillin = ({ postUserInfo }) => {
   useEffect(() => {
     Taro.setNavigationBarTitle({title: '填写个人信息'})
   }, [])
 
   const initialState = {
-    username: '1',
+    username: '',
     workId: '',
     school: '',
     departmentName: '',
@@ -27,6 +29,10 @@ export const Fillin = () => {
       [key]: value
     }))
     return value
+  }
+
+  function handleSubmit() {
+    postUserInfo(info)
   }
 
   return (
@@ -80,8 +86,16 @@ export const Fillin = () => {
       <AtButton
         className="fillin-button"
         type="primary"
-        onClick={() => console.log(info)}
+        onClick={handleSubmit}
       >完成</AtButton>
     </View>
   )
 }
+
+const mapDispatchToProps = dispatch => ({
+  postUserInfo(data) {
+    dispatch(postUserInfo(data))
+  }
+})
+
+export default connect(() => ({}), mapDispatchToProps)(Fillin)
