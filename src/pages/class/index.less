@@ -1,5 +1,14 @@
 .class {
-  position: relative;
+
+  .at-tabs__header {
+    position: fixed;
+    z-index: 999;
+  }
+
+  .container {
+    padding-top: 90px;
+    min-height: calc(100vh - 90px);
+  }
 
   .class-card {
     width: 90%;
@@ -26,9 +35,5 @@
     position: fixed;
     bottom: 130px;
     left: 320px;
-
-    .at-fab {
-      //background: #1850a5;
-    }
   }
 }

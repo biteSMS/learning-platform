@@ -2,7 +2,7 @@
 	"miniprogramRoot": "dist/",
 	"projectname": "learning-platform",
 	"description": "汇学",
-	"appid": "wx947dc8314c417869",
+	"appid": "wx0cffdc9803185bf3",
 	"setting": {
 		"urlCheck": true,
 		"es6": false,

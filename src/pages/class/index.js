@@ -1,5 +1,5 @@
 import { useState } from "@tarojs/taro"
-import { AtTabs, AtTabsPane, AtButton, AtCard, AtFab } from "taro-ui"
+import { AtTabs, AtTabsPane, AtCard, AtFab } from "taro-ui"
 import "./index.less"
 
 const Class = () => {
@@ -14,7 +14,7 @@ const Class = () => {
         onClick={index => setCurrentTab(index)}
       >
         <AtTabsPane current={currentTab} index={0}>
-          <View>
+          <View className="container">
             <AtCard
               className="class-card"
               title="计算机网络"
@@ -50,7 +50,7 @@ const Class = () => {
           </View>
         </AtTabsPane>
         <AtTabsPane current={currentTab} index={1}>
-          <View>我的班级</View>
+          <View className="container">我的班级</View>
         </AtTabsPane>
       </AtTabs>
       <View className="join-button">

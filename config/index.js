@@ -1,3 +1,5 @@
+const path = require('path')
+
 const config = {
   projectName: 'learning-platform',
   date: '2019-5-29',
@@ -92,6 +94,15 @@ const config = {
         }
       }
     }
+  },
+  alias: {
+    '@/actions': path.resolve(__dirname, '..', 'src/actions'),
+    '@/components': path.resolve(__dirname, '..', 'src/components'),
+    '@/assets': path.resolve(__dirname, '..', 'src/assets'),
+    '@/api': path.resolve(__dirname, '..', 'src/api'),
+    '@/constants': path.resolve(__dirname, '..', 'src/constants'),
+    '@/pages': path.resolve(__dirname, '..', 'src/pages'),
+    '@/reducers': path.resolve(__dirname, '..', 'src/reducers'),
   }
 }
 

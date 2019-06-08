@@ -2,7 +2,7 @@ import '@tarojs/async-await'
 import Taro, { Component } from '@tarojs/taro'
 import { Provider } from '@tarojs/redux'
 
-import Index from './pages/index'
+import Class from '@/pages/class'
 
 import configStore from './store'
 import 'taro-ui/dist/style/index.scss'
@@ -14,14 +14,20 @@ class App extends Component {
 
   config = {
     pages: [
+      'pages/auth/index',
+      'pages/auth/login',
+      'pages/auth/fillin',
       'pages/class/index',
       'pages/index/index',
+      'pages/user/index',
+      'pages/user/modify',
+      'pages/user/about',
     ],
     window: {
       backgroundTextStyle: 'light',
-      navigationBarBackgroundColor: '#fff',
+      navigationBarBackgroundColor: '#6190e8',
       navigationBarTitleText: '汇学',
-      navigationBarTextStyle: 'black'
+      navigationBarTextStyle: 'white'
     },
     tabBar: {
       list: [
@@ -38,7 +44,7 @@ class App extends Component {
           selectedIconPath: './assets/tabbar/community-active.png'
         },
         {
-          pagePath: 'pages/index/index',
+          pagePath: 'pages/user/index',
           text: '我的',
           iconPath: './assets/tabbar/mine.png',
           selectedIconPath: './assets/tabbar/mine-active.png'
@@ -47,7 +53,7 @@ class App extends Component {
       color: '#8a8a8a',
       selectedColor: '#6190e8',
       backgroundColor: '#fff',
-      borderStyle: 'white'
+      borderStyle: 'black'
     }
   }
 
@@ -64,7 +70,7 @@ class App extends Component {
   render () {
     return (
       <Provider store={store}>
-        <Index />
+        <Class />
       </Provider>
     )
   }

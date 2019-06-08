@@ -2,13 +2,10 @@ import Taro, { useEffect } from "@tarojs/taro"
 import { View, Button, Text } from "@tarojs/components"
 import { connect } from "@tarojs/redux"
 import { AtButton } from "taro-ui"
-import { add, minus, asyncAdd } from "../../actions/counter"
+import { add, minus, asyncAdd } from "@/actions/counter"
 import "./index.less"
 
 const Index = ({ counter, add, dec, asyncAdd }) => {
-  useEffect(() => {
-    Taro.login()
-  })
 
   return (
     <View className="index">
