@@ -15,7 +15,6 @@ class App extends Component {
   config = {
     pages: [
       'pages/auth/index',
-      'pages/auth/login',
       'pages/auth/fillin',
       'pages/class/index',
       'pages/index/index',
