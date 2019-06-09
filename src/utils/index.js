@@ -21,6 +21,6 @@ export const handleResponse = res => new Promise((resolved, rejected) => {
     case 1:
       resolved()
     default:
-      rejected()
+      rejected(res.data.code)
   }
 })

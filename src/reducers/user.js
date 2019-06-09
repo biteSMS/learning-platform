@@ -1,5 +1,5 @@
 import {
-  MODIFY_USER_INFO
+  UPDATE_USER_INFO
 } from '@/constants/user'
 
 const INITIAL_STATE = {
@@ -8,7 +8,7 @@ const INITIAL_STATE = {
 
 export default function user (state = INITIAL_STATE, action) {
   switch (action.type) {
-    case MODIFY_USER_INFO:
+    case UPDATE_USER_INFO:
       return {
         ...state,
         userInfo: {

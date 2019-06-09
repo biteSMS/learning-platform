@@ -1,14 +1,15 @@
 import Taro, { useState, useEffect } from '@tarojs/taro'
-import { updateUserInfo } from '@/actions/user'
+import { modifyUserInfo } from '@/actions/user'
 import { connect } from "@tarojs/redux"
 import {
   AtInput,
   AtForm,
-  AtButton
+  AtButton,
+  AtMessage
 } from 'taro-ui'
 import './modify.less'
 
-const Modify = ({ userInfo, updateUserInfo }) => {
+const Modify = ({ userInfo, modifyUserInfo }) => {
   useEffect(() => {
     Taro.setNavigationBarTitle({title: '修改个人信息'})
   }, [])
@@ -40,11 +41,14 @@ const Modify = ({ userInfo, updateUserInfo }) => {
   }
 
   function handleSubmit() {
-    updateUserInfo(info)
+    modifyUserInfo(info)
   }
+
+  const isFilledUp = !Object.values(info).includes('')
 
   return (
     <View className="modify">
+      <AtMessage />
       <AtForm>
         <AtInput
           name="username"
@@ -95,6 +99,7 @@ const Modify = ({ userInfo, updateUserInfo }) => {
         className="modify-button"
         type="primary"
         onClick={handleSubmit}
+        disabled={!isFilledUp}
       >修改</AtButton>
     </View>
   )
@@ -105,8 +110,8 @@ const mapStateToProps = ({ user }) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  updateUserInfo(data) {
-    dispatch(updateUserInfo(data))
+  modifyUserInfo(data) {
+    dispatch(modifyUserInfo(data))
   }
 })
 

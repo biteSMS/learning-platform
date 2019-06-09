@@ -1,10 +1,10 @@
 import Taro from "@tarojs/taro"
 import { handleResponse } from "@/utils"
 import { URLS } from "@/constants/urls"
-import { MODIFY_USER_INFO } from "@/constants/user"
+import { UPDATE_USER_INFO } from "@/constants/user"
 
-export const modifyUserInfo = data => ({
-  type: MODIFY_USER_INFO,
+export const updateUserInfo = data => ({
+  type: UPDATE_USER_INFO,
   data
 })
 
@@ -24,7 +24,7 @@ export const fetchUserInfo = userInfo => {
       const { token, user, type } = res.data.data
       Taro.setStorage({ key: "token", data: token })
       dispatch(
-        modifyUserInfo({
+        updateUserInfo({
           sex,
           type,
           ...user
@@ -54,7 +54,7 @@ export const postUserInfo = data => {
         }
       })
       await handleResponse(res)
-      dispatch(modifyUserInfo(data))
+      dispatch(updateUserInfo(data))
       Taro.switchTab({ url: "/pages/class/index" })
     } catch (err) {
       console.log(err)
@@ -62,7 +62,7 @@ export const postUserInfo = data => {
   }
 }
 
-export const updateUserInfo = data => {
+export const modifyUserInfo = data => {
   return async dispatch => {
     try {
       const res = await Taro.request({
@@ -74,11 +74,10 @@ export const updateUserInfo = data => {
         }
       })
       await handleResponse(res)
-      dispatch(modifyUserInfo(data))
-      Taro.navigateBack({ delta: 1 })
-      Taro.showToast({
-        title: "修改成功！",
-        duration: 2000
+      dispatch(updateUserInfo(data))
+      Taro.atMessage({
+        'message': '修改成功',
+        'type': 'success',
       })
     } catch (err) {
       console.log(err)

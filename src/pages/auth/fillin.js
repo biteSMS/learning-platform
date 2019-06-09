@@ -35,6 +35,8 @@ const Fillin = ({ postUserInfo }) => {
     postUserInfo(info)
   }
 
+  const isFilledUp = !Object.values(info).includes('')
+
   return (
     <View className="fillin">
       <AtForm>
@@ -87,6 +89,7 @@ const Fillin = ({ postUserInfo }) => {
         className="fillin-button"
         type="primary"
         onClick={handleSubmit}
+        disabled={!isFilledUp}
       >完成</AtButton>
     </View>
   )
