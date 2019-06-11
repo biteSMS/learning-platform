@@ -10,7 +10,7 @@ const api = {
   CREATE_CLASS: '/class/createClass',
   EXIT_CLASS: '/class/outClass',
   DISSOLVE_CLASS: '/class/dissolve',
-  KICK_OUT_STUDENT: 'class/letOut',
+  KICK_OUT_STUDENT: '/class/letOut',
   GET_CLASS_INFO: '/class/classInfo',
   UPDATE_CLASS_INFO: '/class/updateClassInfo',
   GET_CLASS_MEMBER: '/class/classMember',

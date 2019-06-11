@@ -55,7 +55,7 @@ export default class Members extends Component {
   render() {
     return (
       <View className="members">
-        <View className="title">班级成员 ({this.state.classes.length}人)</View>
+        <View className="title">班级成员({this.state.classes.length}人)</View>
         {
           this.state.classes.length === 0 && <Empty />
         }

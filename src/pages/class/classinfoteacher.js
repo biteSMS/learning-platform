@@ -60,6 +60,9 @@ class ClassInfoTeacher extends Component {
       case 2:
         Taro.navigateTo({url: `/pages/class/members?classId=${this.state.classInfo.classId}`})
         break
+      case 4:
+        Taro.navigateTo({url: `/pages/class/kickout?classId=${this.state.classInfo.classId}`})
+        break
       case 5:
         this.setState({
           showUpdateInfo: true
