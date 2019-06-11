@@ -21,7 +21,8 @@ const User = ({ userInfo }) => {
     email,
     name,
     sex,
-    headUrl
+    headUrl,
+    type
   } = userInfo
 
   return (
@@ -47,6 +48,9 @@ const User = ({ userInfo }) => {
         </View>
         <View className="at-row">
           <View className='at-col'>性别：{sex === 1 ? '男' : '女'}</View>
+          <View className='at-col'>身份：{type === 2 ? '学生' : '老师和学生'}</View>
+        </View>
+        <View className="at-row">
           <View className='at-col'>邮箱：{email}</View>
         </View>
       </View>
@@ -63,6 +67,7 @@ const User = ({ userInfo }) => {
           title="申请成为老师"
           arrow="right"
           iconInfo={{ size: 22, color: '#83c6c2', value: 'user'}}
+          onClick={() => Taro.navigateTo({url: '/pages/user/apply'})}
         />
         <AtListItem
           title="关于"

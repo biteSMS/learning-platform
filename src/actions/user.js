@@ -30,7 +30,7 @@ export const fetchUserInfo = userInfo => {
           ...user
         })
       )
-      const { username, workId } = user
+      const { workId } = user
       if (!workId) {
         Taro.redirectTo({ url: "/pages/auth/fillin" })
       } else {
@@ -77,6 +77,29 @@ export const modifyUserInfo = data => {
       dispatch(updateUserInfo(data))
       Taro.atMessage({
         'message': '修改成功',
+        'type': 'success',
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  }
+}
+
+export const applyTeacher = () => {
+  return async dispatch => {
+    try {
+      const res = await Taro.request({
+        url: URLS.APPLY_TEACHER,
+        method: "GET",
+        header: {
+          token: Taro.getStorageSync("token")
+        }
+      })
+      console.log(res)
+      await handleResponse(res)
+      dispatch(updateUserInfo({type: 1}))
+      Taro.atMessage({
+        'message': '申请成功',
         'type': 'success',
       })
     } catch (err) {

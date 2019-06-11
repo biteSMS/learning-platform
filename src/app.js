@@ -17,10 +17,18 @@ class App extends Component {
       'pages/auth/index',
       'pages/auth/fillin',
       'pages/class/index',
+      'pages/class/classinfostudent',
+      'pages/class/classinfoteacher',
+      'pages/checkin/student',
+      'pages/checkin/teacher',
+      'pages/homework/student',
+      'pages/homework/teacher',
       'pages/index/index',
       'pages/user/index',
       'pages/user/modify',
       'pages/user/about',
+      'pages/user/apply',
+      'pages/community/index'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -56,7 +64,9 @@ class App extends Component {
     }
   }
 
-  componentDidMount () {}
+  componentDidMount () {
+    // Taro.navigateTo({url: '/pages/user/apply'})
+  }
 
   componentDidShow () {}
 

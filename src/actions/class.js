@@ -100,12 +100,16 @@ export const createClass = data => {
         'message': '创建成功',
         'type': 'success',
       })
-      return 'ok'
     } catch (err) {
       console.log(err)
       if (err === 0) {
         Taro.atMessage({
           'message': '创建失败',
+          'type': 'error',
+        })
+      } else if (err === -3) {
+        Taro.atMessage({
+          'message': '你还不是老师！',
           'type': 'error',
         })
       }
