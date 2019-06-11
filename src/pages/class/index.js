@@ -82,6 +82,7 @@ const Class = ({
                 title={c.className}
                 extra="···"
                 note={c.teacherName}
+                onClick={() => Taro.navigateTo({url: `/pages/class/classinfostudent?classId=${c.classId}`})}
               >
                 {c.detail}
               </AtCard>
@@ -98,6 +99,7 @@ const Class = ({
                 title={c.className}
                 extra="···"
                 note={c.teacherName}
+                onClick={() => Taro.navigateTo({url: `/pages/class/classinfoteacher?classId=${c.classId}`})}
               >
                 {c.detail}
               </AtCard>

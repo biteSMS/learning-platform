@@ -116,3 +116,21 @@ export const createClass = data => {
     }
   }
 }
+
+// export const getClassInfo = data => {
+//   return async dispatch => {
+//     try {
+      // const res = await Taro.request({
+      //   url: URLS.GET_CLASS_INFO,
+      //   method: "GET",
+      //   data,
+      //   header: {
+      //     token: Taro.getStorageSync("token")
+      //   }
+      // })
+      // await handleResponse(res)
+//     } catch (err) {
+//       console.log(err)
+//     }
+//   }
+// }
