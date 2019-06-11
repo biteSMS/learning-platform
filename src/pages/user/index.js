@@ -1,4 +1,4 @@
-import Taro, { useEffect } from '@tarojs/taro'
+import Taro from '@tarojs/taro'
 import { connect } from "@tarojs/redux"
 import {
   AtAvatar,
@@ -8,9 +8,6 @@ import {
 import './index.less'
 
 const User = ({ userInfo }) => {
-  useEffect(() => {
-    Taro.setNavigationBarTitle({title: '我的'})
-  }, [])
 
   const {
     username,
@@ -78,6 +75,10 @@ const User = ({ userInfo }) => {
       </AtList>
     </View>
   )
+}
+
+User.config = {
+  navigationBarTitleText: '我的'
 }
 
 const mapStateToProps = ({ user }) => ({
