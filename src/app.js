@@ -66,7 +66,7 @@ class App extends Component {
   }
 
   componentDidMount () {
-    Taro.navigateTo({url: '/pages/class/members?classId=1'})
+    // Taro.navigateTo({url: '/pages/class/members?classId=1'})
   }
 
   componentDidShow () {}

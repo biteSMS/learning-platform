@@ -34,7 +34,6 @@ export class Members extends Component {
       const classes =
       res.data.data.classes
       .map(e => ({...e, open: false}))
-      console.log(classes)
       this.setState({
         ...this.state,
         classes
