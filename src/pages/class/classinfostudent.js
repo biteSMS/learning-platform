@@ -20,6 +20,10 @@ class ClassInfoStudent extends Component {
   }
 
   async componentWillMount() {
+    this.getClassInfo()
+  }
+
+  getClassInfo = async () => {
     try {
       const classId = this.$router.params.classId
       const res = await Taro.request({
@@ -36,6 +40,17 @@ class ClassInfoStudent extends Component {
       const classInfo = res.data.data
       this.setState({
         classInfo
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  handleExit = async () => {
+    try {
+      await this.props.exitClass({classId: this.state.classInfo.classId})
+      wx.navigateBack({
+        delta: 1
       })
     } catch (err) {
       console.log(err)
@@ -81,7 +96,7 @@ class ClassInfoStudent extends Component {
         value: "退出班级"
       }
     ]
-    const { className, detail, teacherName, code, classId } = this.state.classInfo
+    const { className, detail, teacherName, code } = this.state.classInfo
 
     return (
       <View className="classinfo">
@@ -91,11 +106,11 @@ class ClassInfoStudent extends Component {
           cancelText="取消"
           confirmText="退出"
           onCancel={() => this.setState({...this.state, isExitOpen: false})}
-          onConfirm={() => this.props.exitClass({classId})}
+          onConfirm={this.handleExit}
         />
         <View className="classinfo-card">
           <View className="classname">{className}</View>
-          <View className="detail subtitle">课程详情：{detail}</View>
+          <View className="detail subtitle">课程详情：{detail || '暂无课程详情～'}</View>
           <View className="teacher subtitle">任课老师：{teacherName}</View>
           <View className="code subtitle">班级码：{code}</View>
         </View>
@@ -109,7 +124,7 @@ class ClassInfoStudent extends Component {
 
 const mapDispatchToProps = dispatch => ({
   exitClass(data) {
-    dispatch(exitClass(data))
+    return dispatch(exitClass(data))
   }
 })
 

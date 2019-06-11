@@ -20,11 +20,11 @@ class App extends Component {
       'pages/class/classinfostudent',
       'pages/class/classinfoteacher',
       'pages/class/members',
+      'pages/class/kickout',
       'pages/checkin/student',
       'pages/checkin/teacher',
       'pages/homework/student',
       'pages/homework/teacher',
-      'pages/index/index',
       'pages/user/index',
       'pages/user/modify',
       'pages/user/about',
@@ -46,7 +46,7 @@ class App extends Component {
           selectedIconPath: './assets/tabbar/class-active.png'
         },
         {
-          pagePath: 'pages/index/index',
+          pagePath: 'pages/community/index',
           text: '社区',
           iconPath: './assets/tabbar/community.png',
           selectedIconPath: './assets/tabbar/community-active.png'
@@ -66,7 +66,7 @@ class App extends Component {
   }
 
   componentDidMount () {
-    // Taro.navigateTo({url: '/pages/class/members?classId=1'})
+    // Taro.navigateTo({url: '/pages/class/kickout?classId=1'})
   }
 
   componentDidShow () {}

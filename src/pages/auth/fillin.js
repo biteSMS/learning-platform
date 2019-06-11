@@ -31,8 +31,13 @@ const Fillin = ({ postUserInfo }) => {
     return value
   }
 
-  function handleSubmit() {
-    postUserInfo(info)
+  async function handleSubmit() {
+    try {
+      await postUserInfo(info)
+      Taro.switchTab({ url: "/pages/class/index" })
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   const isFilledUp = !Object.values(info).includes('')
@@ -97,7 +102,7 @@ const Fillin = ({ postUserInfo }) => {
 
 const mapDispatchToProps = dispatch => ({
   postUserInfo(data) {
-    dispatch(postUserInfo(data))
+    return dispatch(postUserInfo(data))
   }
 })
 

@@ -5,7 +5,7 @@ import { URLS } from "@/constants/urls"
 import { AtAccordion, AtList, AtListItem } from "taro-ui"
 import "./members.less"
 
-export class Members extends Component {
+export default class Members extends Component {
   config = {
     navigationBarTitleText: "班级成员"
   }
@@ -55,7 +55,7 @@ export class Members extends Component {
   render() {
     return (
       <View className="members">
-        <View className="title">班级成员</View>
+        <View className="title">班级成员 ({this.state.classes.length}人)</View>
         {
           this.state.classes.length === 0 && <Empty />
         }
@@ -67,6 +67,7 @@ export class Members extends Component {
             phone,
             email,
             sex,
+            school,
             open
           } = e
           return (
@@ -79,7 +80,7 @@ export class Members extends Component {
               <AtList>
                 <AtListItem title={`学号：${workId}`} />
                 <AtListItem title={`专业：${department}`} />
-                <AtListItem title="学校：重庆邮电大学" />
+                <AtListItem title={`学校：${school}`} />
                 <AtListItem title={`手机：${phone}`} />
                 <AtListItem title={`邮箱：${email}`} />
                 <AtListItem title={`性别：${sex === 1 ? '男' : '女'}`} />

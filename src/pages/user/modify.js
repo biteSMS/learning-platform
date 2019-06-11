@@ -1,5 +1,6 @@
 import Taro, { useState, useEffect } from '@tarojs/taro'
-import { modifyUserInfo } from '@/actions/user'
+import { postUserInfo } from '@/actions/user'
+import { getClassList, getTeacherClassList } from '@/actions/class'
 import { connect } from "@tarojs/redux"
 import {
   AtInput,
@@ -9,7 +10,7 @@ import {
 } from 'taro-ui'
 import './modify.less'
 
-const Modify = ({ userInfo, modifyUserInfo }) => {
+const Modify = ({ userInfo, postUserInfo, getClassList, getTeacherClassList }) => {
   useEffect(() => {
     Taro.setNavigationBarTitle({title: '修改个人信息'})
   }, [])
@@ -40,8 +41,18 @@ const Modify = ({ userInfo, modifyUserInfo }) => {
     return value
   }
 
-  function handleSubmit() {
-    modifyUserInfo(info)
+  async function handleSubmit() {
+    try {
+      await postUserInfo(info)
+      getClassList()
+      getTeacherClassList()
+      Taro.atMessage({
+        message: "修改成功",
+        type: "success"
+      })
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   const isFilledUp = !Object.values(info).includes('')
@@ -110,8 +121,14 @@ const mapStateToProps = ({ user }) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  modifyUserInfo(data) {
-    dispatch(modifyUserInfo(data))
+  postUserInfo(data) {
+    return dispatch(postUserInfo(data))
+  },
+  getClassList() {
+    return dispatch(getClassList())
+  },
+  getTeacherClassList() {
+    return dispatch(getTeacherClassList())
   }
 })
 

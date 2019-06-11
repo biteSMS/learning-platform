@@ -1,6 +1,11 @@
 import { useState, useEffect } from "@tarojs/taro"
 import { Empty } from "@/components/empty"
-import { getClassList, getTeacherClassList, joinClass, createClass } from "@/actions/class"
+import {
+  getClassList,
+  getTeacherClassList,
+  joinClass,
+  createClass
+} from "@/actions/class"
 import { connect } from "@tarojs/redux"
 import {
   AtTabs,
@@ -24,10 +29,13 @@ const Class = ({
   joinClass,
   createClass
 }) => {
-
-  useEffect(() => {
-    getClassList()
-    getTeacherClassList()
+  useEffect(async () => {
+    try {
+      getClassList()
+      getTeacherClassList()
+    } catch (err) {
+      console.log(err)
+    }
   }, [])
 
   const [currentTab, setCurrentTab] = useState(0)
@@ -62,6 +70,75 @@ const Class = ({
       ...setFloatLayout,
       isOpened: false
     })
+    setCreateInfo({
+      className: "",
+      detail: ""
+    })
+    setCode("")
+  }
+
+  async function handleClickJoin() {
+    try {
+      await joinClass({ classCode: code })
+      Taro.atMessage({
+        message: "加入成功",
+        type: "success"
+      })
+      setFloatLayout({
+        ...floatLayout,
+        isOpened: false
+      })
+      setCode("")
+    } catch (err) {
+      console.log(err)
+      if (err === 0) {
+        Taro.atMessage({
+          message: "班级不存在",
+          type: "error"
+        })
+      } else if (err === -1) {
+        Taro.atMessage({
+          message: "你已加入该班级",
+          type: "error"
+        })
+      } else if (err === -5) {
+        Taro.atMessage({
+          message: "无法加入自己创建的班级",
+          type: "error"
+        })
+      }
+    }
+  }
+
+  async function handleClickCreate() {
+    try {
+      await createClass(createInfo)
+      Taro.atMessage({
+        message: "创建成功",
+        type: "success"
+      })
+      setFloatLayout({
+        ...floatLayout,
+        isOpened: false
+      })
+      setCreateInfo({
+        className: "",
+        detail: ""
+      })
+    } catch (err) {
+      console.log(err)
+      if (err === 0) {
+        Taro.atMessage({
+          message: "创建失败",
+          type: "error"
+        })
+      } else if (err === -3) {
+        Taro.atMessage({
+          message: "你还不是老师！",
+          type: "error"
+        })
+      }
+    }
   }
 
   return (
@@ -82,9 +159,13 @@ const Class = ({
                 title={c.className}
                 extra="···"
                 note={c.teacherName}
-                onClick={() => Taro.navigateTo({url: `/pages/class/classinfostudent?classId=${c.classId}`})}
+                onClick={() =>
+                  Taro.navigateTo({
+                    url: `/pages/class/classinfostudent?classId=${c.classId}`
+                  })
+                }
               >
-                {c.detail}
+                {c.detail || "暂无课程详情～"}
               </AtCard>
             ))}
           </View>
@@ -99,9 +180,13 @@ const Class = ({
                 title={c.className}
                 extra="···"
                 note={c.teacherName}
-                onClick={() => Taro.navigateTo({url: `/pages/class/classinfoteacher?classId=${c.classId}`})}
+                onClick={() =>
+                  Taro.navigateTo({
+                    url: `/pages/class/classinfoteacher?classId=${c.classId}`
+                  })
+                }
               >
-                {c.detail}
+                {c.detail || "暂无课程详情～"}
               </AtCard>
             ))}
           </View>
@@ -128,20 +213,14 @@ const Class = ({
             <AtInput
               type="text"
               title="班级码"
-              placeholder="请输入班级码"
+              placeholder="请输入班级码(不区分大小写)"
               value={code}
               onChange={setCode}
             />
             <AtButton
               className="join-button"
               type="primary"
-              onClick={() => {
-                joinClass({classCode: code})
-                setFloatLayout({
-                  ...floatLayout,
-                  isOpened: false
-                })
-              }}
+              onClick={handleClickJoin}
               disabled={!code}
             >
               加 入
@@ -171,13 +250,7 @@ const Class = ({
             <AtButton
               className="join-button"
               type="primary"
-              onClick={() => {
-                createClass(createInfo)
-                setFloatLayout({
-                  ...floatLayout,
-                  isOpened: false
-                })
-              }}
+              onClick={handleClickCreate}
               disabled={!createInfo.className}
             >
               创 建
@@ -195,16 +268,16 @@ const mapStateToProps = ({ userClass }) => ({
 
 const mapDispatchToProps = dispatch => ({
   getClassList() {
-    dispatch(getClassList())
+    return dispatch(getClassList())
   },
   getTeacherClassList() {
-    dispatch(getTeacherClassList())
+    return dispatch(getTeacherClassList())
   },
   joinClass(data) {
-    dispatch(joinClass(data))
+    return dispatch(joinClass(data))
   },
   createClass(data) {
-    dispatch(createClass(data))
+    return dispatch(createClass(data))
   }
 })
 

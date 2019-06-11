@@ -14,137 +14,90 @@ const updateTeacherClassList = data => ({
 })
 
 export const getClassList = () => async dispatch => {
-  try {
-    const res = await Taro.request({
-      url: URLS.GET_CLASS_LIST,
-      method: "GET",
-      header: {
-        token: Taro.getStorageSync("token")
-      }
-    })
-    await handleResponse(res)
-    dispatch(updateClassList(res.data.data.classes))
-  } catch (err) {
-    console.log(err)
-  }
+  const res = await Taro.request({
+    url: URLS.GET_CLASS_LIST,
+    method: "GET",
+    header: {
+      token: Taro.getStorageSync("token")
+    }
+  })
+  await handleResponse(res)
+  dispatch(updateClassList(res.data.data.classes))
 }
 
 export const getTeacherClassList = () => async dispatch => {
-  try {
-    const res = await Taro.request({
-      url: URLS.GET_TEACHER_CLASS_LIST,
-      method: "GET",
-      header: {
-        token: Taro.getStorageSync("token")
-      }
-    })
-    await handleResponse(res)
-    dispatch(updateTeacherClassList(res.data.data.classes))
-  } catch (err) {
-    console.log(err)
-  }
+  const res = await Taro.request({
+    url: URLS.GET_TEACHER_CLASS_LIST,
+    method: "GET",
+    header: {
+      token: Taro.getStorageSync("token")
+    }
+  })
+  await handleResponse(res)
+  dispatch(updateTeacherClassList(res.data.data.classes))
 }
 
 export const joinClass = data => async dispatch => {
-  try {
-    const res = await Taro.request({
-      url: URLS.JOIN_CLASS,
-      method: "GET",
-      data,
-      header: {
-        token: Taro.getStorageSync("token")
-      }
-    })
-    await handleResponse(res)
-    dispatch(getClassList())
-    Taro.atMessage({
-      message: "加入成功",
-      type: "success"
-    })
-  } catch (err) {
-    console.log(err)
-    if (err === 0) {
-      Taro.atMessage({
-        message: "班级不存在",
-        type: "error"
-      })
-    } else if (err === -1) {
-      Taro.atMessage({
-        message: "你已加入该班级",
-        type: "error"
-      })
+  const res = await Taro.request({
+    url: URLS.JOIN_CLASS,
+    method: "GET",
+    data,
+    header: {
+      token: Taro.getStorageSync("token")
     }
-  }
+  })
+  await handleResponse(res)
+  dispatch(getClassList())
 }
 
 export const createClass = data => async dispatch => {
-  try {
-    const res = await Taro.request({
-      url: URLS.CREATE_CLASS,
-      method: "GET",
-      data,
-      header: {
-        token: Taro.getStorageSync("token")
-      }
-    })
-    await handleResponse(res)
-    dispatch(getTeacherClassList())
-    Taro.atMessage({
-      message: "创建成功",
-      type: "success"
-    })
-  } catch (err) {
-    console.log(err)
-    if (err === 0) {
-      Taro.atMessage({
-        message: "创建失败",
-        type: "error"
-      })
-    } else if (err === -3) {
-      Taro.atMessage({
-        message: "你还不是老师！",
-        type: "error"
-      })
+  const res = await Taro.request({
+    url: URLS.CREATE_CLASS,
+    method: "GET",
+    data,
+    header: {
+      token: Taro.getStorageSync("token")
     }
-  }
+  })
+  await handleResponse(res)
+  dispatch(getTeacherClassList())
 }
 
 export const exitClass = data => async dispatch => {
-  try {
-    const res = await Taro.request({
-      url: URLS.EXIT_CLASS,
-      method: "GET",
-      data,
-      header: {
-        token: Taro.getStorageSync("token")
-      }
-    })
-    await handleResponse(res)
-    dispatch(getClassList())
-    wx.navigateBack({
-      delta: 1
-    })
-  } catch (err) {
-    console.log(err)
-  }
+  const res = await Taro.request({
+    url: URLS.EXIT_CLASS,
+    method: "GET",
+    data,
+    header: {
+      token: Taro.getStorageSync("token")
+    }
+  })
+  await handleResponse(res)
+  dispatch(getClassList())
 }
 
 export const dissolveClass = data => async dispatch => {
-  try {
-    const res = await Taro.request({
-      url: URLS.DISSOLVE_CLASS,
-      method: "GET",
-      data,
-      header: {
-        token: Taro.getStorageSync("token")
-      }
-    })
-    await handleResponse(res)
-    dispatch(getTeacherClassList())
-    wx.navigateBack({
-      delta: 1
-    })
-  } catch (err) {
-    console.log(err)
-  }
+  const res = await Taro.request({
+    url: URLS.DISSOLVE_CLASS,
+    method: "GET",
+    data,
+    header: {
+      token: Taro.getStorageSync("token")
+    }
+  })
+  await handleResponse(res)
+  dispatch(getTeacherClassList())
+}
+
+export const updateClassInfo = data => async dispatch => {
+  const res = await Taro.request({
+    url: URLS.UPDATE_CLASS_INFO,
+    method: "GET",
+    data,
+    header: {
+      token: Taro.getStorageSync("token")
+    }
+  })
+  await handleResponse(res)
+  dispatch(getTeacherClassList())
 }

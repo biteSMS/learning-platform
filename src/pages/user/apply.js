@@ -4,6 +4,17 @@ import { connect } from "@tarojs/redux"
 import './apply.less'
 
 const Apply = ({ type, applyTeacher }) => {
+  async function handleApply() {
+    try {
+      await applyTeacher()
+      Taro.atMessage({
+        message: "申请成功",
+        type: "success"
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   return (
     <View className="apply">
@@ -12,7 +23,7 @@ const Apply = ({ type, applyTeacher }) => {
         className="apply-button"
         type="primary"
         disabled={type === 1}
-        onClick={applyTeacher}
+        onClick={handleApply}
       >
         申 请
       </AtButton>
@@ -30,7 +41,7 @@ const mapStateToProps = ({ user }) => ({
 
 const mapDispatchToProps = dispatch => ({
   applyTeacher(data) {
-    dispatch(applyTeacher(data))
+    return dispatch(applyTeacher(data))
   }
 })
 
