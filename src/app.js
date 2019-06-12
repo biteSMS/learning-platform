@@ -72,7 +72,7 @@ class App extends Component {
   }
 
   componentDidMount () {
-    Taro.navigateTo({url: '/pages/checkin/detail?siginId=84&classId=50'})
+    // Taro.navigateTo({url: '/pages/checkin/detail?siginId=84&classId=50'})
   }
 
   componentDidShow () {}
