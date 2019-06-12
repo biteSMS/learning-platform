@@ -4,7 +4,8 @@ import { connect } from "@tarojs/redux"
 import {
   AtInput,
   AtForm,
-  AtButton
+  AtButton,
+  AtMessage
 } from 'taro-ui'
 import './fillin.less'
 
@@ -37,6 +38,12 @@ const Fillin = ({ postUserInfo }) => {
       Taro.switchTab({ url: "/pages/class/index" })
     } catch (err) {
       console.log(err)
+      if (err === 2) {
+        Taro.atMessage({
+          message: '手机号或者邮箱格式错误',
+          type: 'error'
+        })
+      }
     }
   }
 
@@ -44,6 +51,7 @@ const Fillin = ({ postUserInfo }) => {
 
   return (
     <View className="fillin">
+      <AtMessage />
       <AtForm>
         <AtInput
           name="username"

@@ -1,5 +1,5 @@
 import Taro, { Component } from "@tarojs/taro"
-import { handleResponse } from "@/utils"
+import { handleResponse, getDate } from "@/utils"
 import { URLS } from "@/constants/urls"
 import { getLocation } from "./getLocation"
 import { AtButton, AtList, AtListItem, AtFloatLayout, AtMessage } from "taro-ui"
@@ -45,6 +45,7 @@ export default class Teacher extends Component {
         }
       })
       await handleResponse(res)
+      console.log(res)
       this.setState({
         checkInList: res.data.data
       })
@@ -111,6 +112,10 @@ export default class Teacher extends Component {
     }
   }
 
+  handleClickDetail = siginId => {
+    Taro.navigateTo({url: `/pages/checkin/detail?siginId=${siginId}&classId=${this.state.classId}`})
+  }
+
   render() {
     const hours = [0, 1, 2]
     const ms = [...new Array(60)].map((e, i) => i)
@@ -130,24 +135,13 @@ export default class Teacher extends Component {
           {this.state.checkInList.map((checkin, i) => {
             const { siginId, startTime, total } = checkin
             const { sigin, late, absence, vacate } = total
-            const time = new Date(startTime)
-            const date = `${time.getFullYear()}年${time.getMonth() +
-              1}月${time.getDate()}日 ${
-              time.getHours() > 9 ? time.getHours() : "0" + time.getHours()
-            }:${
-              time.getMinutes() > 9
-                ? time.getMinutes()
-                : "0" + time.getMinutes()
-            }:${
-              time.getSeconds() > 9
-                ? time.getSeconds()
-                : "0" + time.getSeconds()
-            }`
+            const date = getDate(startTime)
             return (
               <AtListItem
                 key={i}
                 title={date}
                 arrow="right"
+                onClick={() => this.handleClickDetail(siginId)}
                 note={`出勤: ${sigin} 缺勤: ${absence} 迟到: ${late} 请假: ${vacate}`}
               />
             )

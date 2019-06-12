@@ -52,6 +52,12 @@ const Modify = ({ userInfo, postUserInfo, getClassList, getTeacherClassList }) =
       })
     } catch (err) {
       console.log(err)
+      if (err === 2) {
+        Taro.atMessage({
+          message: '手机号或者邮箱格式错误',
+          type: 'error'
+        })
+      }
     }
   }
 

@@ -1,5 +1,7 @@
 import Taro, { Component } from "@tarojs/taro"
 import { getLocation } from "./getLocation"
+import { handleResponse, getDate, getCheckInStatus } from "@/utils"
+import { URLS } from "@/constants/urls"
 import {
   AtInput,
   AtForm,
@@ -8,8 +10,6 @@ import {
   AtMessage,
   AtButton
 } from "taro-ui"
-import { handleResponse } from "@/utils"
-import { URLS } from "@/constants/urls"
 import "./student.less"
 
 export default class Student extends Component {
@@ -52,7 +52,6 @@ export default class Student extends Component {
       this.setState({
         checkInRecord: res.data.data
       })
-      console.log(res.data.data)
     } catch (err) {
       console.log(err)
     }
@@ -76,30 +75,30 @@ export default class Student extends Component {
       await handleResponse(res)
       this.getCheckInRecord()
       Taro.atMessage({
-        message: '签到成功',
-        type: 'success'
+        message: "签到成功",
+        type: "success"
       })
     } catch (err) {
       console.log(err)
       if (err === -1) {
         Taro.atMessage({
-          message: '签到过期',
-          type: 'error'
+          message: "签到过期",
+          type: "error"
         })
       } else if (err === 0) {
         Taro.atMessage({
-          message: '签到码错误',
-          type: 'error'
+          message: "签到码错误",
+          type: "error"
         })
       } else if (err === 2) {
         Taro.atMessage({
-          message: '签到成功(迟到)',
-          type: 'warning'
+          message: "签到成功(迟到)",
+          type: "warning"
         })
       } else if (err === -2) {
         Taro.atMessage({
-          message: '已经签到过了',
-          type: 'warning'
+          message: "已经签到过了",
+          type: "warning"
         })
       }
     }
@@ -155,8 +154,12 @@ export default class Student extends Component {
         )}
         <View className="title">签到记录</View>
         <AtList>
-          <AtListItem title={"2019年6月12日 15:02:31"} note={`出勤`} />
-          <AtListItem title={"2019年6月11日 11:02:31"} note={`迟到`} />
+          {this.state.checkInRecord.map(e => {
+            let note = `状态：${getCheckInStatus(e.status)}`
+            return (
+              <AtListItem title={getDate(e.time)} note={note} key={e.time} />
+            )
+          })}
         </AtList>
       </View>
     )

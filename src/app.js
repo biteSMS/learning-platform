@@ -21,6 +21,7 @@ class App extends Component {
       'pages/class/kickout',
       'pages/checkin/student',
       'pages/checkin/teacher',
+      'pages/checkin/detail',
       'pages/homework/student',
       'pages/homework/teacher',
       'pages/homework/post',
@@ -71,7 +72,7 @@ class App extends Component {
   }
 
   componentDidMount () {
-    // Taro.navigateTo({url: '/pages/community/index'})
+    Taro.navigateTo({url: '/pages/checkin/detail?siginId=84&classId=50'})
   }
 
   componentDidShow () {}
