@@ -57,6 +57,9 @@ class ClassInfoTeacher extends Component {
 
   handleClick = (item, index) => {
     switch (index) {
+      case 0:
+          Taro.navigateTo({url: `/pages/checkin/teacher?classId=${this.state.classInfo.classId}`})
+        break
       case 2:
         Taro.navigateTo({url: `/pages/class/members?classId=${this.state.classInfo.classId}`})
         break

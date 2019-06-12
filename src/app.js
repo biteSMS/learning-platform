@@ -1,9 +1,7 @@
 import '@tarojs/async-await'
 import Taro, { Component } from '@tarojs/taro'
 import { Provider } from '@tarojs/redux'
-
 import Class from '@/pages/class'
-
 import configStore from './store'
 import 'taro-ui/dist/style/index.scss'
 import './app.less'
@@ -25,12 +23,19 @@ class App extends Component {
       'pages/checkin/teacher',
       'pages/homework/student',
       'pages/homework/teacher',
+      'pages/homework/post',
+      'pages/homework/submit',
       'pages/user/index',
       'pages/user/modify',
       'pages/user/about',
       'pages/user/apply',
       'pages/community/index'
     ],
+    permission: {
+      'scope.userLocation': {
+        desc: '你的位置信息将用于签到定位'
+      }
+    },
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#6190e8',
@@ -66,7 +71,7 @@ class App extends Component {
   }
 
   componentDidMount () {
-    // Taro.navigateTo({url: '/pages/class/kickout?classId=1'})
+    // Taro.navigateTo({url: '/pages/community/index'})
   }
 
   componentDidShow () {}

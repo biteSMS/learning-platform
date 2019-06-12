@@ -1,4 +1,4 @@
-import { AtButton, AtList, AtListItem } from "taro-ui"
+import { AtList, AtListItem } from "taro-ui"
 import './student.less'
 
 export const Student = () => {

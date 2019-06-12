@@ -262,8 +262,8 @@ const Class = ({
   )
 }
 const mapStateToProps = ({ userClass }) => ({
-  classes: userClass.classes.reverse(),
-  teacherClasses: userClass.teacherClasses.reverse()
+  classes: userClass.classes,
+  teacherClasses: userClass.teacherClasses
 })
 
 const mapDispatchToProps = dispatch => ({

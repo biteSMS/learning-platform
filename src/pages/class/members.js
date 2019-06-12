@@ -68,12 +68,13 @@ export default class Members extends Component {
             email,
             sex,
             school,
-            open
+            open,
+            id
           } = e
           return (
             <AtAccordion
               title={name}
-              key={workId}
+              key={id}
               open={open}
               onClick={value => this.handleClick(value, i)}
             >
