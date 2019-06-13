@@ -26,6 +26,8 @@ class App extends Component {
       'pages/homework/teacher',
       'pages/homework/post',
       'pages/homework/submit',
+      'pages/homework/hwinfostudent',
+      'pages/homework/hwinfoteacher',
       'pages/user/index',
       'pages/user/modify',
       'pages/user/about',
@@ -74,9 +76,8 @@ class App extends Component {
   }
 
   componentDidMount () {
-    // Taro.navigateTo({url: '/pages/checkin/detail?siginId=84&classId=50'})
-    // Taro.navigateTo({url: '/pages/homework/post?classId=51'})
-    // Taro.navigateTo({url: '/pages/community/topic?topicId=9'})
+    // Taro.navigateTo({url: '/pages/homework/submit?homeworkId=34'})
+    Taro.navigateTo({url: '/pages/homework/hwinfoteacher?homeworkId=40'})
   }
 
   componentDidShow () {}

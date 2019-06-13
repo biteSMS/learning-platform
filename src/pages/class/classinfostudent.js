@@ -48,7 +48,7 @@ class ClassInfoStudent extends Component {
 
   handleExit = async () => {
     try {
-      await this.props.exitClass({classId: this.state.classInfo.classId})
+      await this.props.exitClass({ classId: this.state.classInfo.classId })
       wx.navigateBack({
         delta: 1
       })
@@ -62,6 +62,11 @@ class ClassInfoStudent extends Component {
       case 0:
         Taro.navigateTo({
           url: `/pages/checkin/student?classId=${this.state.classInfo.classId}`
+        })
+        break
+      case 1:
+        Taro.navigateTo({
+          url: `/pages/homework/student?classId=${this.state.classInfo.classId}`
         })
         break
       case 2:
@@ -110,12 +115,14 @@ class ClassInfoStudent extends Component {
           content="确认要退出班级吗？"
           cancelText="取消"
           confirmText="退出"
-          onCancel={() => this.setState({...this.state, isExitOpen: false})}
+          onCancel={() => this.setState({ ...this.state, isExitOpen: false })}
           onConfirm={this.handleExit}
         />
         <View className="classinfo-card">
           <View className="classname">{className}</View>
-          <View className="detail subtitle">课程详情：{detail || '暂无课程详情～'}</View>
+          <View className="detail subtitle">
+            课程详情：{detail || "暂无课程详情～"}
+          </View>
           <View className="teacher subtitle">任课老师：{teacherName}</View>
           <View className="code subtitle">班级码：{code}</View>
         </View>

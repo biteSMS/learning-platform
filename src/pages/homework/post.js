@@ -18,8 +18,9 @@ export default class Post extends Component {
         content: '',
         classId: null,
         deadLine: [0, 0],
-        files: []
-      }
+        fileId: []
+      },
+      files: []
     }
   }
 
@@ -50,14 +51,40 @@ export default class Post extends Component {
     })
   }
 
-  handleChangeFiles = files => {
-    console.log(files)
-    this.setState({
-      data: {
-        ...this.state.data,
-        files
+  handleChangeFiles = async (files, type, index) => {
+    try {
+      if (type === "remove") {
+        let temp = this.state.files
+        temp.splice(index, 1)
+        this.setState({
+          files: temp,
+          data: {
+            ...this.state.data,
+            fileId: temp.map(e => e.fileId)
+          }
+        })
       }
-    })
+      if (type === "add") {
+        const res = await Taro.uploadFile({
+          url: URLS.UPLOAD_FILE,
+          filePath: files[files.length - 1].url,
+          name: 'file',
+          header: {
+            token: Taro.getStorageSync("token")
+          }
+        })
+        const file = JSON.parse(res.data).data
+        this.setState({
+          files: this.state.files.concat(file),
+          data: {
+            ...this.state.data,
+            fileId: this.state.data.fileId.concat(file.fileId)
+          }
+        })
+      }
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   handleChangeDeadline = e => {
@@ -72,22 +99,29 @@ export default class Post extends Component {
   handleClickPost = async () => {
     try {
       console.log(this.state.data)
-      // const res = await Taro.request({
-      //   url: URLS.POST_HOMEWORK,
-      //   method: "POST",
-      //   data: {
-      //     classId: this.state.classId,
-      //     title: 'title',
-      //     deadLine: 3600,
-      //     content: 'content',
-      //     files: this.state.data.files[0].url
-      //   },
-      //   header: {
-      //     token: Taro.getStorageSync("token")
-      //   }
-      // })
-      // console.log(res)
-      // await handleResponse(res)
+      const res = await Taro.request({
+        url: URLS.POST_HOMEWORK,
+        method: "POST",
+        data: {
+          classId: parseInt(this.state.data.classId),
+          title: this.state.data.title,
+          deadline: this.state.data.deadLine[0]*24*3600+this.state.data.deadLine[1]*3600,
+          content: this.state.data.content,
+          fileId: this.state.data.fileId
+        },
+        header: {
+          token: Taro.getStorageSync("token")
+        }
+      })
+      await handleResponse(res)
+      Taro.showToast({
+        title: '发布成功',
+        icon: 'success',
+        duration: 2000
+      })
+      Taro.navigateBack({
+        delta: 1
+      })
     } catch (err) {
       console.log(err)
     }
@@ -102,17 +136,20 @@ export default class Post extends Component {
         <AtForm>
           <AtInput
             title="作业标题"
+            placeholder="请输入作业标题"
             onChange={this.handleChangeTitle}
           />
           <AtTextarea
             maxLength={100}
             placeholder="作业描述..."
+            value={this.state.data.content}
             height={300}
             onChange={this.handleChangeContent}
           />
           <AtImagePicker
-            files={this.state.data.files}
+            files={this.state.files}
             onChange={this.handleChangeFiles}
+            count={3}
           />
           <Picker
             mode="multiSelector"
@@ -129,6 +166,7 @@ export default class Post extends Component {
           className="post-button"
           type="primary"
           onClick={this.handleClickPost}
+          disabled={this.state.data.title === ''}
         >发 布</AtButton>
       </View>
     )
