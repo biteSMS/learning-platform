@@ -30,7 +30,9 @@ class App extends Component {
       'pages/user/modify',
       'pages/user/about',
       'pages/user/apply',
-      'pages/community/index'
+      'pages/community/index',
+      'pages/community/post',
+      'pages/community/topic'
     ],
     permission: {
       'scope.userLocation': {
@@ -73,6 +75,8 @@ class App extends Component {
 
   componentDidMount () {
     // Taro.navigateTo({url: '/pages/checkin/detail?siginId=84&classId=50'})
+    // Taro.navigateTo({url: '/pages/homework/post?classId=51'})
+    // Taro.navigateTo({url: '/pages/community/topic?topicId=9'})
   }
 
   componentDidShow () {}

@@ -9,7 +9,8 @@ import "./teacher.less"
 
 export default class Teacher extends Component {
   config = {
-    navigationBarTitleText: "签到"
+    navigationBarTitleText: "签到",
+    enablePullDownRefresh: true
   }
 
   constructor(props) {
@@ -21,6 +22,15 @@ export default class Teacher extends Component {
       showOpenSetting: false,
       showFloat: false
     }
+  }
+
+  async onPullDownRefresh() {
+    await this.getCheckInList()
+    Taro.stopPullDownRefresh()
+    Taro.atMessage({
+      message: '更新成功',
+      type: 'success'
+    })
   }
 
   componentWillMount() {
@@ -45,7 +55,6 @@ export default class Teacher extends Component {
         }
       })
       await handleResponse(res)
-      console.log(res)
       this.setState({
         checkInList: res.data.data
       })

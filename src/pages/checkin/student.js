@@ -14,7 +14,8 @@ import "./student.less"
 
 export default class Student extends Component {
   config = {
-    navigationBarTitleText: "签到"
+    navigationBarTitleText: "签到",
+    enablePullDownRefresh: true
   }
 
   constructor(props) {
@@ -25,6 +26,15 @@ export default class Student extends Component {
       checkInRecord: [],
       showOpenSetting: false
     }
+  }
+
+  async onPullDownRefresh() {
+    await this.getCheckInRecord()
+    Taro.stopPullDownRefresh()
+    Taro.atMessage({
+      message: '更新成功',
+      type: 'success'
+    })
   }
 
   componentWillMount() {
@@ -82,7 +92,7 @@ export default class Student extends Component {
       console.log(err)
       if (err === -1) {
         Taro.atMessage({
-          message: "签到过期",
+          message: "未在老师范围内签到",
           type: "error"
         })
       } else if (err === 0) {
@@ -99,6 +109,11 @@ export default class Student extends Component {
         Taro.atMessage({
           message: "已经签到过了",
           type: "warning"
+        })
+      } else if (err === 3) {
+        Taro.atMessage({
+          message: "签到已过期",
+          type: "error"
         })
       }
     }

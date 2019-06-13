@@ -31,6 +31,7 @@ const api = {
   POST_TOPIC: '/topic/publish',
   GET_TOPICS: '/topic/topics',
   DELETE_TOPIC: '/topic/delete',
+  GET_TOPIC_DETAIL: '/topic/topicDetail',
   POST_COMMENT: '/comment/publish',
   DELETE_COMMENT: '/comment/delete'
 }

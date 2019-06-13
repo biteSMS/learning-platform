@@ -1,50 +1,79 @@
-import { AtFab, AtAvatar } from "taro-ui"
+import Taro, { Component } from "@tarojs/taro"
+import { AtFab, AtAvatar, AtMessage } from "taro-ui"
+import { connect } from "@tarojs/redux"
+import { getDate } from "@/utils"
+import { getTopics } from "@/actions/community"
 import "./index.less"
 
-export const Index = () => {
-  return (
-    <View className="community">
-      <View className="topic-card">
-        <View className="info">
-          <AtAvatar
-            image="http://storage.360buyimg.com/mtd/home/32443566_635798770100444_2113947400891531264_n1533825816008.jpg"
-            circle
-            size="small"
-          />
-          <View className="name">bibi</View>
-          <View className="school">重庆邮电大学</View>
+class Index extends Component {
+  config = {
+    navigationBarTitleText: "社区",
+    enablePullDownRefresh: true
+  }
+
+  constructor(props) {
+    super(props)
+    this.state = {}
+  }
+
+  async onPullDownRefresh() {
+    await this.props.getTopics()
+    Taro.stopPullDownRefresh()
+    Taro.atMessage({
+      message: '更新成功',
+      type: 'success'
+    })
+  }
+
+  componentWillMount() {
+    this.props.getTopics()
+  }
+
+  handleClickButton = () => {
+    Taro.navigateTo({url: '/pages/community/post'})
+  }
+
+  handleClickTopic = topicId => {
+    Taro.navigateTo({url: `/pages/community/topic?topicId=${topicId}`})
+  }
+
+  render() {
+    return (
+      <View className="community">
+        <AtMessage />
+        {this.props.topics.map(topic => (
+          <View className="topic-card" key={topic.topicId} onClick={() => this.handleClickTopic(topic.topicId)}>
+            <View className="info">
+              <AtAvatar image={topic.headUrl} circle size="small" />
+              <View className="name">{topic.nickName}</View>
+              <View className="school">{topic.school}</View>
+            </View>
+            <View className="title">{topic.title}</View>
+            <View className="content">{topic.content}</View>
+            <View className="date">{getDate(topic.publishTime)}</View>
+          </View>
+        ))}
+        <View className="fab-button" onClick={this.handleClickButton}>
+          <AtFab>
+            <Text className="at-fab__icon at-icon at-icon-add" />
+          </AtFab>
         </View>
-        <View className="title">问一下学长们该怎么准备考研呢？</View>
-        <View className="content">
-          什么时候准备？该准备什么呢？希望学长学姐们能解答一下，谢谢。
-        </View>
-        <View className="date">2019年6月12日 15:30:21</View>
       </View>
-      <View className="topic-card">
-        <View className="info">
-          <AtAvatar
-            image="http://storage.360buyimg.com/mtd/home/32443566_635798770100444_2113947400891531264_n1533825816008.jpg"
-            circle
-            size="small"
-          />
-          <View className="name">Levi</View>
-          <View className="school">重庆大学</View>
-        </View>
-        <View className="title">大家分享一下你们学校的趣事吧。</View>
-        <View className="content">
-          如题。
-        </View>
-        <View className="date">2019年6月12日 12:10:45</View>
-      </View>
-      <View className="fab-button" onClick={this.handleClick}>
-        <AtFab>
-          <Text className="at-fab__icon at-icon at-icon-add" />
-        </AtFab>
-      </View>
-    </View>
-  )
+    )
+  }
 }
 
-Index.config = {
-  navigationBarTitleText: "社区"
-}
+const mapStateToProps = ({ community }) => ({
+  topics: community.topics
+})
+
+const mapDispatchToProps = dispatch => ({
+  getTopics() {
+    return dispatch(getTopics())
+  }
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Index)

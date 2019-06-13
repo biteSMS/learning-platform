@@ -52,8 +52,7 @@ export default class Detail extends Component {
         url: URLS.GET_CHECK_IN_DETAIL,
         method: "GET",
         data: {
-          siginId: this.state.siginId,
-          type: 0
+          siginId: this.state.siginId
         },
         header: {
           token: Taro.getStorageSync("token")
@@ -115,7 +114,7 @@ export default class Detail extends Component {
     }
   }
 
-  handleChange = async (uid, e) => {
+  handleChange = async (uid, siginDetailId, e) => {
     try {
       const status = +e.detail.value
       const res = await Taro.request({
@@ -124,7 +123,7 @@ export default class Detail extends Component {
         data: {
           uid,
           status,
-          siginDetailId: this.state.siginId
+          siginDetailId
         },
         header: {
           token: Taro.getStorageSync("token")
@@ -167,8 +166,8 @@ export default class Detail extends Component {
         <AtList>
           {this.state.checkInList.map(e => (
             <Picker
-              key={e.id}
-              onChange={ev => this.handleChange(e.id ,ev)}
+              key={e.uid}
+              onChange={ev => this.handleChange(e.uid, e.siginDetailId, ev)}
               range={selector}
             >
               <AtListItem title={e.name} note={e.workId} extraText={getCheckInStatus(e.status)} />
