@@ -1,7 +1,15 @@
 import Taro, { Component } from "@tarojs/taro"
 import { handleResponse } from "@/utils"
 import { URLS } from "@/constants/urls"
-import { AtGrid, AtModal, AtFloatLayout, AtForm, AtInput, AtButton, AtMessage } from "taro-ui"
+import {
+  AtGrid,
+  AtModal,
+  AtFloatLayout,
+  AtForm,
+  AtInput,
+  AtButton,
+  AtMessage
+} from "taro-ui"
 import { dissolveClass, updateClassInfo } from "@/actions/class"
 import { connect } from "@tarojs/redux"
 import "./classinfo.less"
@@ -16,11 +24,12 @@ class ClassInfoTeacher extends Component {
     this.state = {
       classInfo: {},
       updateInfo: {
-        className: '',
-        detail: ''
+        className: "",
+        detail: ""
       },
       isDissolveOpen: false,
-      showUpdateInfo: false
+      showUpdateInfo: false,
+      isQrcodeOpen: false
     }
   }
 
@@ -58,16 +67,29 @@ class ClassInfoTeacher extends Component {
   handleClick = (item, index) => {
     switch (index) {
       case 0:
-        Taro.navigateTo({url: `/pages/checkin/teacher?classId=${this.state.classInfo.classId}`})
+        Taro.navigateTo({
+          url: `/pages/checkin/teacher?classId=${this.state.classInfo.classId}`
+        })
         break
       case 1:
-        Taro.navigateTo({url: `/pages/homework/teacher?classId=${this.state.classInfo.classId}`})
+        Taro.navigateTo({
+          url: `/pages/homework/teacher?classId=${this.state.classInfo.classId}`
+        })
         break
       case 2:
-        Taro.navigateTo({url: `/pages/class/members?classId=${this.state.classInfo.classId}`})
+        Taro.navigateTo({
+          url: `/pages/class/members?classId=${this.state.classInfo.classId}`
+        })
+        break
+      case 3:
+        this.setState({
+          isQrcodeOpen: true
+        })
         break
       case 4:
-        Taro.navigateTo({url: `/pages/class/kickout?classId=${this.state.classInfo.classId}`})
+        Taro.navigateTo({
+          url: `/pages/class/kickout?classId=${this.state.classInfo.classId}`
+        })
         break
       case 5:
         this.setState({
@@ -104,7 +126,7 @@ class ClassInfoTeacher extends Component {
 
   handleDissolve = async () => {
     try {
-      await this.props.dissolveClass({classId: this.state.classInfo.classId})
+      await this.props.dissolveClass({ classId: this.state.classInfo.classId })
       wx.navigateBack({
         delta: 1
       })
@@ -116,31 +138,31 @@ class ClassInfoTeacher extends Component {
   render() {
     const gridList = [
       {
-        image: require('@/assets/checkin.png'),
+        image: require("@/assets/checkin.png"),
         value: "签到"
       },
       {
-        image: require('@/assets/homework.png'),
+        image: require("@/assets/homework.png"),
         value: "作业"
       },
       {
-        image: require('@/assets/members.png'),
+        image: require("@/assets/members.png"),
         value: "班级成员"
       },
       {
-        image: require('@/assets/qrcode.png'),
+        image: require("@/assets/qrcode.png"),
         value: "班级二维码"
       },
       {
-        image: require('@/assets/kick-out.png'),
+        image: require("@/assets/kick-out.png"),
         value: "踢出成员"
       },
       {
-        image: require('@/assets/update.png'),
+        image: require("@/assets/update.png"),
         value: "修改班级信息"
       },
       {
-        image: require('@/assets/dissolve.png'),
+        image: require("@/assets/dissolve.png"),
         value: "解散班级"
       }
     ]
@@ -148,7 +170,8 @@ class ClassInfoTeacher extends Component {
       className,
       detail,
       teacherName,
-      code
+      code,
+      qr_code
     } = this.state.classInfo
 
     return (
@@ -159,12 +182,16 @@ class ClassInfoTeacher extends Component {
           content="确认要解散班级吗？"
           cancelText="取消"
           confirmText="退出"
-          onCancel={() => this.setState({...this.state, isDissolveOpen: false})}
+          onCancel={() =>
+            this.setState({ ...this.state, isDissolveOpen: false })
+          }
           onConfirm={this.handleDissolve}
         />
         <View className="classinfo-card">
           <View className="classname">{className}</View>
-          <View className="detail subtitle">课程详情：{detail || '暂无课程详情～'}</View>
+          <View className="detail subtitle">
+            课程详情：{detail || "暂无课程详情～"}
+          </View>
           <View className="teacher subtitle">任课老师：{teacherName}</View>
           <View className="code subtitle">班级码：{code}</View>
         </View>
@@ -174,7 +201,7 @@ class ClassInfoTeacher extends Component {
         <AtFloatLayout
           title="修改班级信息"
           isOpened={this.state.showUpdateInfo}
-          onClose={() => this.setState({showUpdateInfo: false})}
+          onClose={() => this.setState({ showUpdateInfo: false })}
         >
           <View className="update-classinfo">
             <AtForm>
@@ -182,27 +209,44 @@ class ClassInfoTeacher extends Component {
                 type="text"
                 title="班级名字"
                 value={this.state.updateInfo.className}
-                onChange={className => this.setState({updateInfo: {...this.state.updateInfo, className}})}
+                onChange={className =>
+                  this.setState({
+                    updateInfo: { ...this.state.updateInfo, className }
+                  })
+                }
                 placeholder="请填写班级名字"
               />
               <AtInput
                 type="text"
                 title="班级详情"
                 value={this.state.updateInfo.detail}
-                onChange={detail => this.setState({updateInfo: {...this.state.updateInfo, detail}})}
+                onChange={detail =>
+                  this.setState({
+                    updateInfo: { ...this.state.updateInfo, detail }
+                  })
+                }
                 placeholder="请填写学期/班级详情"
               />
             </AtForm>
             <AtButton
               className="update-button"
               type="primary"
-              disabled={this.state.updateInfo.className === ''}
+              disabled={this.state.updateInfo.className === ""}
               onClick={this.handleClickUpdateButton}
             >
               修 改
             </AtButton>
           </View>
         </AtFloatLayout>
+        <AtModal
+          isOpened={this.state.isQrcodeOpen}
+          onClose={() => this.setState({ isQrcodeOpen: false })}
+        >
+          <Image
+            src={qr_code}
+            style={{ width: "200px", height: "200px", margin: "15px 35px" }}
+          />
+        </AtModal>
       </View>
     )
   }

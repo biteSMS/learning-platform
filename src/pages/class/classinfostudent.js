@@ -15,7 +15,8 @@ class ClassInfoStudent extends Component {
     super(props)
     this.state = {
       classInfo: {},
-      isExitOpen: false
+      isExitOpen: false,
+      isQrcodeOpen: false
     }
   }
 
@@ -74,6 +75,11 @@ class ClassInfoStudent extends Component {
           url: `/pages/class/members?classId=${this.state.classInfo.classId}`
         })
         break
+      case 3:
+        this.setState({
+          isQrcodeOpen: true
+        })
+        break
       case 4:
         this.setState({
           isExitOpen: true
@@ -106,7 +112,7 @@ class ClassInfoStudent extends Component {
         value: "退出班级"
       }
     ]
-    const { className, detail, teacherName, code } = this.state.classInfo
+    const { className, detail, teacherName, code, qr_code } = this.state.classInfo
 
     return (
       <View className="classinfo">
@@ -129,6 +135,9 @@ class ClassInfoStudent extends Component {
         <View className="grid">
           <AtGrid data={gridList} onClick={this.handleClick} />
         </View>
+        <AtModal isOpened={this.state.isQrcodeOpen} onClose={() => this.setState({isQrcodeOpen: false})}>
+          <Image src={qr_code} style={{width: '200px', height: '200px', margin: '15px 35px'}} />
+        </AtModal>
       </View>
     )
   }
