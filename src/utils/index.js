@@ -42,3 +42,33 @@ export const getCheckInStatus = type => {
     default:
   }
 }
+
+export const getSubmitStatus = type => {
+  switch (type) {
+    case 0:
+      return "迟交"
+    case 1:
+      return "按时提交"
+    case 2:
+      return "未交"
+    case 3:
+      return "老师发布的"
+    default:
+  }
+}
+
+export const getCheckHomeworkStatus = type => {
+  switch (type) {
+    case 0:
+      return "未批改"
+    case 1:
+      return "已批改"
+    case 2:
+      return "驳回"
+    case 3:
+      return "学生撤回"
+    case 4:
+      return "老师发布的"
+    default:
+  }
+}

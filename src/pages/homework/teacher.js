@@ -63,6 +63,12 @@ export default class Teacher extends Component {
     })
   }
 
+  handleClickItem = homeworkId => {
+    Taro.navigateTo({
+      url: `/pages/homework/hwinfoteacher?homeworkId=${homeworkId}`
+    })
+  }
+
   render() {
     return (
       <View className="homework-teacher">
@@ -85,6 +91,7 @@ export default class Teacher extends Component {
               title={e.title}
               arrow="right"
               note={e.content}
+              onClick={() => this.handleClickItem(e.id)}
             />
           ))}
         </AtList>

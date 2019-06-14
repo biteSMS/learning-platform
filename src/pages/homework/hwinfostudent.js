@@ -71,6 +71,7 @@ export default class HomeworkInfoStudent extends Component {
           <View className="content">{content}</View>
           <View className="start">开始时间：{getDate(startTime)}</View>
           <View className="start">截止时间：{getDate(deadline)}</View>
+          <View className="start">附件：{files.length === 0 ? '无' : ''}</View>
           <View className="file">
             {files.map(e => (<Image key={e.id} src={e.url} onClick={this.handleClickImg} />))}
           </View>

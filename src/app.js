@@ -28,6 +28,8 @@ class App extends Component {
       'pages/homework/submit',
       'pages/homework/hwinfostudent',
       'pages/homework/hwinfoteacher',
+      'pages/homework/detailteacher',
+      'pages/homework/detailstudent',
       'pages/user/index',
       'pages/user/modify',
       'pages/user/about',
@@ -75,10 +77,7 @@ class App extends Component {
     }
   }
 
-  componentDidMount () {
-    // Taro.navigateTo({url: '/pages/homework/submit?homeworkId=34'})
-    Taro.navigateTo({url: '/pages/homework/hwinfoteacher?homeworkId=40'})
-  }
+  componentDidMount () {}
 
   componentDidShow () {}
 

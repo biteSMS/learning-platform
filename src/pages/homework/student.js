@@ -89,6 +89,12 @@ export default class Student extends Component {
     })
   }
 
+  handleClickItem = submitId => {
+    Taro.navigateTo({
+      url: `/pages/homework/detailstudent?submitId=${submitId}`
+    })
+  }
+
   render() {
     return (
       <View className="homework-student">
@@ -118,6 +124,7 @@ export default class Student extends Component {
             title={e.title}
             arrow="right"
             note={getDate(e.submitTime)}
+            onClick={() => this.handleClickItem(e.submitId)}
           />
           ))}
         </AtList>

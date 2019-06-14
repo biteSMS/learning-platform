@@ -72,6 +72,18 @@ export default class HomeworkInfoTeacher extends Component {
     }
   }
 
+  handleClickImg = () => {
+    Taro.previewImage({
+      urls: this.state.homework.files.map(e => e.url)
+    })
+  }
+
+  handleClickItem = submitId => {
+    Taro.navigateTo({
+      url: `/pages/homework/detailteacher?submitId=${submitId}`
+    })
+  }
+
   render() {
     const { title, content, startTime, deadline, files } = this.state.homework
 
@@ -82,6 +94,7 @@ export default class HomeworkInfoTeacher extends Component {
           <View className="content">{content}</View>
           <View className="start">开始时间：{getDate(startTime)}</View>
           <View className="start">截止时间：{getDate(deadline)}</View>
+          <View className="start">附件：{files.length === 0 ? '无' : ''}</View>
           <View className="file">
             {files.map(e => (
               <Image key={e.id} src={e.url} onClick={this.handleClickImg} />
@@ -96,6 +109,7 @@ export default class HomeworkInfoTeacher extends Component {
               title={e.name}
               note={e.workId}
               arrow="right"
+              onClick={() => this.handleClickItem(e.data.id)}
             />
           ))}
         </AtList>

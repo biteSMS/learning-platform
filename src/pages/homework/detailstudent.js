@@ -6,10 +6,10 @@ import {
   getCheckHomeworkStatus
 } from "@/utils"
 import { URLS } from "@/constants/urls"
-import { AtMessage, AtButton, AtTextarea } from "taro-ui"
-import "./detailteacher.less"
+import { AtMessage } from "taro-ui"
+import "./detailstudent.less"
 
-export default class DetailTeacher extends Component {
+export default class DetailStudent extends Component {
   config = {
     navigationBarTitleText: "作业详情"
   }
@@ -18,8 +18,7 @@ export default class DetailTeacher extends Component {
     super(props)
     this.state = {
       submitId: null,
-      detail: {},
-      result: ''
+      detail: {}
     }
   }
 
@@ -119,23 +118,8 @@ export default class DetailTeacher extends Component {
               <Image key={e.id} src={e.url} onClick={this.handleClickImg} />
             ))}
           </View>
-          <View className="start">评价：{this.state.detail.result || "暂未评价"}</View>
+          <View className="start">老师评价：{this.state.detail.result || "暂未评价"}</View>
         </View>
-        <AtTextarea
-          maxLength={100}
-          placeholder="请输入评价..."
-          value={this.state.result}
-          height={300}
-          onChange={this.handleChangeResult}
-        />
-        <AtButton
-          className="button"
-          type="primary"
-          onClick={this.handleClickButton}
-          disabled={this.state.result === ''}
-        >
-          评价
-        </AtButton>
       </View>
     )
   }
