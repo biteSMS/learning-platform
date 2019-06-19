@@ -21,7 +21,13 @@ export default class Topic extends Component {
     super(props)
     this.state = {
       topicId: null,
-      topic: {},
+      topic: {
+        nickName: '',
+        school: '',
+        title: '',
+        content: '',
+        publishTime: ''
+      },
       comments: [],
       showFloat: false,
       content: ''

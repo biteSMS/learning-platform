@@ -8,7 +8,7 @@ import "./index.less"
 
 class Notification extends Component {
   config = {
-    navigationBarTitleText: "消息",
+    navigationBarTitleText: "通知",
     enablePullDownRefresh: true
   }
 
@@ -36,7 +36,7 @@ class Notification extends Component {
         <AtMessage />
         {this.props.messages.length === 0 && <Empty />}
         {this.props.messages.map(e => (
-          <View className="message-card">
+          <View className="message-card" key={e.date}>
             <Image className="icon" src={require("@/assets/message.png")} />
             <View className="right">
               <View className="title">{e.title}</View>
