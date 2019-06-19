@@ -18,6 +18,7 @@ class App extends Component {
       'pages/class/classinfostudent',
       'pages/class/classinfoteacher',
       'pages/class/members',
+      'pages/class/excel',
       'pages/class/kickout',
       'pages/checkin/student',
       'pages/checkin/teacher',
@@ -36,7 +37,8 @@ class App extends Component {
       'pages/user/apply',
       'pages/community/index',
       'pages/community/post',
-      'pages/community/topic'
+      'pages/community/topic',
+      'pages/notification/index'
     ],
     permission: {
       'scope.userLocation': {
@@ -62,6 +64,12 @@ class App extends Component {
           text: '社区',
           iconPath: './assets/tabbar/community.png',
           selectedIconPath: './assets/tabbar/community-active.png'
+        },
+        {
+          pagePath: 'pages/notification/index',
+          text: '通知',
+          iconPath: './assets/tabbar/notification.png',
+          selectedIconPath: './assets/tabbar/notification-active.png'
         },
         {
           pagePath: 'pages/user/index',

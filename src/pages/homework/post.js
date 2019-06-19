@@ -150,6 +150,7 @@ export default class Post extends Component {
             files={this.state.files}
             onChange={this.handleChangeFiles}
             count={3}
+            multiple={false}
           />
           <Picker
             mode="multiSelector"

@@ -97,6 +97,11 @@ class ClassInfoTeacher extends Component {
         })
         break
       case 6:
+        Taro.navigateTo({
+          url: `/pages/class/excel?classId=${this.state.classInfo.classId}`
+        })
+        break
+      case 7:
         this.setState({
           isDissolveOpen: true
         })
@@ -160,6 +165,10 @@ class ClassInfoTeacher extends Component {
       {
         image: require("@/assets/update.png"),
         value: "修改班级信息"
+      },
+      {
+        image: require("@/assets/excel.png"),
+        value: "导出"
       },
       {
         image: require("@/assets/dissolve.png"),

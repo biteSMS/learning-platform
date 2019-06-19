@@ -14,6 +14,7 @@ const api = {
   GET_CLASS_INFO: '/class/classInfo',
   UPDATE_CLASS_INFO: '/class/updateClassInfo',
   GET_CLASS_MEMBER: '/class/classMember',
+  GET_EXCEL: '/excel/getCount',
   POST_CHECK_IN: '/sigin/publishSigin',
   GET_CHECK_IN_LIST: '/sigin/classSiginList',
   GET_CHECK_IN_DETAIL: '/sigin/siginDetail',
@@ -36,7 +37,8 @@ const api = {
   DELETE_TOPIC: '/topic/delete',
   GET_TOPIC_DETAIL: '/topic/topicDetail',
   POST_COMMENT: '/comment/publish',
-  DELETE_COMMENT: '/comment/delete'
+  DELETE_COMMENT: '/comment/delete',
+  GET_NOTIFICATION: '/message/unReadMessage'
 }
 
 export const URLS =

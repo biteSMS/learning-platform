@@ -6,7 +6,8 @@ import "./hwinfoteacher.less"
 
 export default class HomeworkInfoTeacher extends Component {
   config = {
-    navigationBarTitleText: "作业详情"
+    navigationBarTitleText: "作业详情",
+    enablePullDownRefresh: true
   }
 
   constructor(props) {
@@ -16,6 +17,15 @@ export default class HomeworkInfoTeacher extends Component {
       homework: {},
       submitRecord: []
     }
+  }
+
+  async onPullDownRefresh() {
+    await Promise.all[this.getDetails(), this.getSubmitRecord()]
+    Taro.stopPullDownRefresh()
+    Taro.atMessage({
+      message: '更新成功',
+      type: 'success'
+    })
   }
 
   componentWillMount() {
@@ -89,6 +99,7 @@ export default class HomeworkInfoTeacher extends Component {
 
     return (
       <View className="homework-info-teacher">
+        <AtMessage />
         <View className="homework-info">
           <View className="title">{title}</View>
           <View className="content">{content}</View>

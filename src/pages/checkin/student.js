@@ -107,7 +107,7 @@ export default class Student extends Component {
         })
       } else if (err === -2) {
         Taro.atMessage({
-          message: "已经签到过了",
+          message: "已经签过到了",
           type: "warning"
         })
       } else if (err === 3) {

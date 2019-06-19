@@ -81,9 +81,6 @@ export default class Teacher extends Component {
           发布作业
         </AtButton>
         <View className="title">作业发布记录 (点击查看详细)</View>
-        {this.state.homeworkList.length === 0 && (
-          <View className="none">暂无作业发布记录</View>
-        )}
         <AtList>
           {this.state.homeworkList.map(e => (
             <AtListItem
@@ -95,6 +92,9 @@ export default class Teacher extends Component {
             />
           ))}
         </AtList>
+        {this.state.homeworkList.length === 0 && (
+          <View className="none">暂无作业发布记录</View>
+        )}
       </View>
     )
   }
