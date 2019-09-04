@@ -26,7 +26,7 @@ export default class Topic extends Component {
         school: '',
         title: '',
         content: '',
-        publishTime: ''
+        publishTime: 1561126630458
       },
       comments: [],
       showFloat: false,

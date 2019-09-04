@@ -14,7 +14,10 @@ export default class HomeworkInfoTeacher extends Component {
     super(props)
     this.state = {
       homeworkId: null,
-      homework: {},
+      homework: {
+        startTime: 1561126630458,
+        deadline: 1561126630458
+      },
       submitRecord: []
     }
   }

@@ -18,7 +18,9 @@ export default class DetailTeacher extends Component {
     super(props)
     this.state = {
       submitId: null,
-      detail: {},
+      detail: {
+        submitTime: 1561126630458
+      },
       result: ''
     }
   }
